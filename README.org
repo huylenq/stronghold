@@ -1,0 +1,11 @@
+* Philosophy
+- Opinionated
+- Batteries included
+- Loose compiler - strict linter
+
+* Stack
+Django
+React + Redux
+
+* TODO
+- [ ] Add Jupyter notebook 
