@@ -6,7 +6,7 @@ import {
 import styled, { keyframes } from 'styled-components';
 import { push } from 'react-router-redux';
 import { connect, DispatchProp } from 'react-redux';
-import Card from './components/Card';
+import Card from 'components/Card';
 
 function stopPropagation(event: React.SyntheticEvent<any>) {
   event.stopPropagation();
