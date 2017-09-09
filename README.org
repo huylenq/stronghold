@@ -8,5 +8,5 @@
 - Django
 - React + Redux
 
-* TODO
+* Todo
 - [ ] Add Jupyter notebook 
