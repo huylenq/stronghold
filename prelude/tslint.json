@@ -5,6 +5,7 @@
         "interface-name": [true, "always-prefix"],
         "no-string-literal": false,
         "no-any": false,
+        "jsx-alignment": ["true"],
 
         "align": [
             true,

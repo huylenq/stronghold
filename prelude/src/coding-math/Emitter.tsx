@@ -29,7 +29,7 @@ export default class Regen extends React.Component {
     canvas.height = height * window.devicePixelRatio;
     canvas.style.width = window.innerWidth + 'px';
     canvas.style.height = window.innerHeight + 'px';
-    context.scale(2, 2);
+    context.scale(window.devicePixelRatio, window.devicePixelRatio);
 
     const randomDirection = () => (-Math.PI / 2 + config.angle / 2) - Math.random() * config.angle;
     const randomSpeed  = () => config.initVelocity + Math.random() * 6;
