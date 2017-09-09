@@ -5,8 +5,8 @@
 - Loose compiler / linter, I don't do nuclear science
 
 * Stack
-Django
-React + Redux
+- Django
+- React + Redux
 
 * TODO
 - [ ] Add Jupyter notebook 
