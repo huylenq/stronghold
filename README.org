@@ -1,7 +1,8 @@
 * Philosophy
+- Monolithic is da best
 - Opinionated
 - Batteries included
-- Loose compiler - strict linter
+- Loose compiler / linter, I don't do nuclear science
 
 * Stack
 Django
