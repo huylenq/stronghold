@@ -57,20 +57,19 @@ export default class Springs extends CanvasComponent<ICanvasComponentProps> {
   }
 
   onMouseMove(event: MouseEvent) {
-      this.mouseX = event.clientX;
-      this.mouseY = event.clientY;
+    this.mouseX = event.clientX;
+    this.mouseY = event.clientY;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    this.springPoint.x = this.mouseX;
-    this.springPoint.y = this.mouseY;
+    this.springPoint.x = this.mouseX || this.springPoint.x;
+    this.springPoint.y = this.mouseY || this.springPoint.y;
     this.spring.update();
     this.weight.update();
 
     this.springPoint.draw(ctx);
     this.weight.draw(ctx);
     this.spring.draw(ctx);
-
   }
 
 }
