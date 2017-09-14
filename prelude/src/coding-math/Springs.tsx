@@ -1,58 +1,75 @@
 import * as React from 'react';
-import CanvasComponent, {ICanvasComponentProps} from './CanvasComponent';
+import CanvasComponent, { dat, ICanvasComponentProps } from './CanvasComponent';
 import Particle from './Particle';
-
-const K = .1;
+import Spring from './Spring';
 
 export default class Springs extends CanvasComponent<ICanvasComponentProps> {
 
   weight: Particle;
   springPoint: Particle;
 
+  spring: Spring;
+
   mouseX: number;
   mouseY: number;
 
-  constructor(props, state){
-    super(props, state);
+  @dat({min: 0, max: 1})
+  get stiffness() {
+    return this.spring.stiffness;
+  }
+  set stiffness(value: number) {
+    this.spring.stiffness = value;
   }
 
-  componentDidMount() {
-    super.componentDidMount();
+  @dat({min: 0, max: 500})
+  get springLength() {
+    return this.spring.length;
+  }
+  set springLength(value: number) {
+    this.spring.length = value;
+  }
+
+  @dat({min: 0, max: 5, step: 0.1})
+  get gravity() {
+    return this.weight.gravity;
+  }
+  set gravity(value: number) {
+    this.weight.gravity = value;
+  }
+
+  constructor(props: ICanvasComponentProps, state: any) {
+    super(props, state);
     this.weight = Particle.create({
       x: 150,
       y: 150
     });
+    this.weight.gravity = 1;
     this.weight.friction = 0.1;
+
     this.springPoint = Particle.create({
       x: this.props.width / 2,
       y: this.props.height / 2
     });
     this.springPoint.radius = 4;
+
+    this.spring = new Spring(this.weight, this.springPoint, 50, .1);
   }
 
-  onMouseMove(event) {
+  onMouseMove(event: MouseEvent) {
       this.mouseX = event.clientX;
       this.mouseY = event.clientY;
   }
 
-  componentWillUnMount() {
-    super.componentWillUnmount();
-  }
-
   draw(ctx: CanvasRenderingContext2D) {
-    const springForce = this.springPoint.position.subtract(this.weight.position).multiplyBy(K);
-
-    this.springPoint.x = this.mouseX;setInterval
+    this.springPoint.x = this.mouseX;
     this.springPoint.y = this.mouseY;
-    this.springPoint.draw(ctx);
-
-    this.weight.accelerate(springForce);
+    this.spring.update();
     this.weight.update();
+
+    this.springPoint.draw(ctx);
     this.weight.draw(ctx);
-    ctx.beginPath();
-    ctx.moveTo(this.weight.x, this.weight.y);
-    ctx.lineTo(this.springPoint.x, this.springPoint.y);
-    ctx.stroke();
+    this.spring.draw(ctx);
+
   }
 
 }

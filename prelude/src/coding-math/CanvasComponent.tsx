@@ -1,8 +1,31 @@
 import * as React from 'react';
+import { default as gdat } from 'dat.gui/build/dat.gui.js';
+
+function defined(value: any) {
+  return value !== null && typeof value !== 'undefined';
+}
+
+interface IDatOptions {
+  min?: number;
+  max?: number;
+  step?: number;
+}
+
+export function dat(options: IDatOptions = {}) {
+  if ((options.max !== null && typeof options.max !== 'undefined')
+      && (options.min === null && typeof options.min !== 'undefined')) {
+    throw new Error('`min` is required if `max` is defined.');
+  }
+  return (target: Object, key: string) => {
+    target['__datFields'] = target['__datFields'] || [];
+    target['__datFields'].push({ key, ...options });
+  };
+}
 
 export interface ICanvasComponentProps {
   width: number;
   height: number;
+  dat?: boolean;
 }
 
 export default
@@ -10,6 +33,8 @@ abstract class CanvasComponent<T extends ICanvasComponentProps = ICanvasComponen
 extends React.Component<T, {}> {
 
   private ref: HTMLCanvasElement;
+  private dat: any;
+
   private _requestAnimationFrameId: number;
 
   abstract draw(context: CanvasRenderingContext2D, delta: number);
@@ -39,9 +64,22 @@ extends React.Component<T, {}> {
     if (this['onMouseMove']) {
       this.ref.addEventListener('mousemove', this['onMouseMove'].bind(this));
     }
+
+    if (this.props.dat && this['__datFields']) {
+      this.dat = new gdat.GUI();
+      for (let datField of this['__datFields']) {
+        const args = [this, datField.key];
+        const config = this.dat.add(this, datField.key);
+        if (defined(datField.min)) { config.min(datField.min); }
+        if (defined(datField.max)) { config.max(datField.max); }
+        if (defined(datField.step)) { config.step(datField.step); }
+      }
+    }
+
   }
 
   componentWillUnmount() {
+    if (this.dat) { this.dat.destroy(); }
     if (this['onMouseMove']) {
       this.ref.removeEventListener('mousemove', this['onMouseMove']);
     }

@@ -56,7 +56,6 @@ class Welcome extends Component<IWelcomeOwnProps & IWelcomeStateProps, {}> {
                 CodingMath
               </a>
             </p>
-            <Tag>WIP</Tag>
           </SLCard>
           <SLCard onClick={this.props.onOdontologyCardClick}>
             <h5><a>Odontology</a></h5>

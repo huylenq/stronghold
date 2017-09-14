@@ -16,16 +16,16 @@ export default class Vector implements IPosition {
   }
 
   get x() { return this._x; }
-  set x(x) { this._x = x; }
+  set x(x: number) { this._x = x; }
 
   get y() { return this._y; }
-  set y(y) { this._y = y; }
+  set y(y: number) { this._y = y; }
 
   get angle() {
     return Math.atan2(this.y, this.x);
   }
-  set angle(angle) {
-    const length = this.length;/* weight.accelerate({vx: */
+  set angle(angle: number) {
+    const length = this.length;
     this.x = length * Math.cos(angle);
     this.y = length * Math.sin(angle);
   }
@@ -34,56 +34,56 @@ export default class Vector implements IPosition {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 
-  set length(length) {
+  set length(length: number) {
     const angle = this.angle;
     this.x = length * Math.cos(angle);
     this.y = length * Math.sin(angle);
   }
 
-  rotate(degree) {
+  rotate(degree: number) {
     return new Vector(this.x, this.y).rotateBy(degree);
   }
 
-  rotateBy(degree) {
+  rotateBy(degree: number) {
     this.angle += degree;
     return this;
   }
 
-  add(other) {
+  add(other: Vector) {
     return new Vector(this.x + other.x, this.y + other.y);
   }
 
-  subtract(other) {
+  subtract(other: Vector) {
     return new Vector(this.x - other.x, this.y - other.y);
   }
 
-  multiply(scalar) {
+  multiply(scalar: number) {
     return new Vector(this.x * scalar, this.y * scalar);
   }
 
-  divide(scalar) {
+  divide(scalar: number) {
     return new Vector(this.x / scalar, this.y / scalar);
   }
 
-  addTo(other) {
+  addTo(other: Vector) {
     this.x += other.x;
     this.y += other.y;
     return this;
   }
 
-  subtractFrom(other) {
+  subtractFrom(other: Vector) {
     this.x -= other.x;
     this.y -= other.y;
     return this;
   }
 
-  multiplyBy(scalar) {
+  multiplyBy(scalar: number) {
     this.x *= scalar;
     this.y *= scalar;
     return this;
   }
 
-  divideBy(scalar) {
+  divideBy(scalar: number) {
     this.x /= scalar;
     this.y /= scalar;
     return this;

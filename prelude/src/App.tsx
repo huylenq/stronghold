@@ -25,7 +25,7 @@ export default class App extends React.Component {
         <Route
           path="/springs"
           render={() =>
-            <Springs width={innerWidth} height={innerHeight} />
+            <Springs width={innerWidth} height={innerHeight} dat />
           }
         />
       </Switch>
