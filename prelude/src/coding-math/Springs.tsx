@@ -40,9 +40,10 @@ export default class Springs extends CanvasComponent<ICanvasComponentProps> {
   constructor(props: ICanvasComponentProps, state: any) {
     super(props, state);
     this.weight = Particle.create({
-      x: 150,
-      y: 150
+      x: this.props.width / 2,
+      y: this.props.height / 2 + 100
     });
+    this.weight.radius = 14;
     this.weight.gravity = 1;
     this.weight.friction = 0.1;
 
