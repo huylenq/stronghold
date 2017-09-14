@@ -1,12 +1,16 @@
-export default class Vector {
-  _x: number
-  _y: number
+export default class Vector implements IPosition {
+  _x: number;
+  _y: number;
 
-  static create({x: x1, y: y1}, {x: x2, y: y2}): Vector {
-    return new Vector(x2 - x1, y2 - y1);
+  static of(x: number, y: number): Vector {
+    return new Vector(x, y);
   }
 
-  constructor(x = 1, y = 1) {
+  static create(p1: IPosition, p2: IPosition): Vector {
+    return new Vector(p2.x - p1.x, p2.y - p1.y);
+  }
+
+  constructor(x: number = 1, y: number = 1) {
     this._x = x;
     this._y = y;
   }
@@ -21,7 +25,7 @@ export default class Vector {
     return Math.atan2(this.y, this.x);
   }
   set angle(angle) {
-    const length = this.length;
+    const length = this.length;/* weight.accelerate({vx: */
     this.x = length * Math.cos(angle);
     this.y = length * Math.sin(angle);
   }

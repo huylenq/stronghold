@@ -1,7 +1,4 @@
-interface IVector {
-  x: number;
-  y: number;
-}
+import Vector from './Vector';
 
 export default class Particle {
   x: number;
@@ -20,7 +17,7 @@ export default class Particle {
     direction = 0,
     mass = 0,
     gravity = 0,
-    radius = 1,
+    radius = 10,
     friction = 0}: {
       x?: number,
       y?: number,
@@ -43,10 +40,11 @@ export default class Particle {
     return particle;
   }
 
-  accelerate({vx, vy}:
-             {vx: number, vy: number}) {
-    this.vx += vx;
-    this.vy += vy;
+  accelerate(v: Vector) {
+    const oldV = {vx: this.vx, vy: this.vy};
+    this.vx += v.x;
+    this.vy += v.y;
+    const newV = {vx: this.vx, vy: this.vy};
   }
 
   get direction() {
@@ -67,6 +65,10 @@ export default class Particle {
     this.vy = Math.sin(direction) * speed;
   }
 
+  get position() {
+    return Vector.of(this.x, this.y);
+  }
+
   update() {
     this.vy += this.gravity;
     this.vx *= 1 - this.friction;
@@ -75,11 +77,11 @@ export default class Particle {
     this.y += this.vy;
   }
 
-  distanceTo({x, y}: IVector) {
+  distanceTo({x, y}: IPosition) {
     return Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
   }
 
-  angleTo({x, y}: IVector) {
+  angleTo({x, y}: IPosition) {
     return Math.atan2(y - this.y, x - this.x);
   }
 
@@ -91,7 +93,7 @@ export default class Particle {
     gx = dx / dist * length,
     gy = dy / dist * length;
 
-    this.accelerate({vx: gx, vy: gy});
+    this.accelerate(Vector.of(gx, gy));
   }
 
   draw(context: CanvasRenderingContext2D) {

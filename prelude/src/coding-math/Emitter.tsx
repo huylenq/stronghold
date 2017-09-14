@@ -37,6 +37,12 @@ export default class Regen extends React.Component {
     const particles: Particle[] = [];
 
     const config = {
+      _particlesNum: 500,
+      get particlesNum() { return this._particlesNum; },
+      set particlesNum(n: number) {
+        this._particlesNum = n;
+        initParticles(n);
+      },
       _gravity: 0.1,
       get gravity() { return this._gravity; },
       set gravity(gravity: number) {
@@ -52,6 +58,7 @@ export default class Regen extends React.Component {
     };
 
     this.gui = new dat.GUI();
+    this.gui.add(config, 'particlesNum', 1, 1000).step(1);
     this.gui.add(config, 'gravity', 0, 1);
     this.gui.add(config, 'initVelocity', 1, 20);
     this.gui.add(config, 'angle', Math.PI * .05, Math.PI * .5);
@@ -59,15 +66,19 @@ export default class Regen extends React.Component {
     bouncingGui.add(config, 'bounce');
     bouncingGui.add(config, 'bounceFactor', 0, 1);
 
-    for (let i = 0; i < 500; i++) {
-      particles.push(Particle.create({
-        x: width * 0.5,
-        y: height,
-        direction: randomDirection(),
-        gravity: config.gravity,
-        radius: 2 + Math.random() * 10,
-        speed: randomSpeed()
-      }));
+    initParticles(config.particlesNum);
+    function initParticles(n: number) {
+      particles.length = 0;
+      for (let i = 0; i < n; i++) {
+        particles.push(Particle.create({
+          x: width * 0.5,
+          y: height,
+          direction: randomDirection(),
+          gravity: config.gravity,
+          radius: 2 + Math.random() * 10,
+          speed: randomSpeed()
+        }));
+      }
     }
 
     update();

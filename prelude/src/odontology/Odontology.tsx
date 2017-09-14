@@ -44,8 +44,6 @@ export default class Dentistry extends ThreeComponent {
       texture.needsUpdate = true;
     });
 
-    // Model
-    // It's tricky to get type-safe for this
     const objLoader = new OBJLoader(manager);
 
     function loadObj(resourcePath: string) {
@@ -71,26 +69,14 @@ export default class Dentistry extends ThreeComponent {
     loadObj('three/teeth/Model_Lengua.OBJ');
 
     window.addEventListener('resize', this.onWindowResize, false);
-    /* document.addEventListener('mousemove', this.onDocumentMouseMove, false);*/
   }
-
-  update() {
-    /* this.camera.position.x += ( this.mouseX - this.camera.position.x ) * .05;*/
-    /* this.camera.position.y += ( - this.mouseY - this.camera.position.y ) * .05;*/
-    /* this.camera.lookAt(this.scene.position);*/
-  }
-
-  /* onDocumentMouseMove = (event) => {*/
-  /* this.mouseX = ( event.clientX - this.centerX) / 2;*/
-  /* this.mouseY = ( event.clientY - this.centerY ) / 2;*/
-  /* }*/
 
   onWindowResize = () => {
     this.centerX = this.props.width / 2,
     this.centerY = this.props.height / 2;
     this.camera.aspect = this.props.width / this.props.height;
     this.camera.updateProjectionMatrix();
-    /* this.renderer.setSize( window.innerWidth, window.innerHeight );*/
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
 }

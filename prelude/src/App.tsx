@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
-import Emitter from './coding-math/Emitter';
-import Odontology from './odontology/Odontology';
-import Welcome from './Welcome';
-import Cube from 'three/Cube';
+
+import Emitter from 'coding-math/Emitter';
+import Odontology from 'odontology/Odontology';
+import Welcome from 'Welcome';
+import Springs from 'coding-math/Springs';
 
 export default class App extends React.Component {
 
@@ -15,13 +16,16 @@ export default class App extends React.Component {
         <Route
           path="/odontology"
           render={() =>
-            <Odontology width={innerWidth} height={innerHeight} controls />
+            <Odontology
+              controls
+              width={innerWidth} height={innerHeight}
+            />
           }
         />
         <Route
-          path="/cube"
+          path="/springs"
           render={() =>
-            <Cube width={innerWidth} height={innerHeight} rotationSpeed={3} />
+            <Springs width={innerWidth} height={innerHeight} />
           }
         />
       </Switch>
