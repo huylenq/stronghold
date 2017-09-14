@@ -31,13 +31,6 @@ class Welcome extends Component<IWelcomeOwnProps & IWelcomeStateProps, {}> {
     return (
       <div className={this.props.className}>
         <Cube width={100} height={100} z={4} />
-        <Message>
-          <Title className="pt-callout">
-            It is really nice to see you here!<br/>
-            This site is underconstruction and suppose to be the place
-            where I dump out my wanders and random little experiments.
-          </Title>
-        </Message>
         <Deck>
           <SLCard onClick={this.props.onEmitterCardClick}>
             <h5><a>Particles Emitter</a></h5>
@@ -69,6 +62,13 @@ class Welcome extends Component<IWelcomeOwnProps & IWelcomeStateProps, {}> {
             <Tag>Game</Tag>
           </SLCard>
         </Deck>
+        <Footer>
+          <div className="pt-callout">
+            <i>I make things</i>
+            {' - '}
+            <a className="pt-icon-standard pt-icon-envelope" href="mailto:huy.lenq@gmail.com"> huy.lenq@gmail.com</a>
+          </div>
+        </Footer>
       </div>
     );
   }
@@ -79,16 +79,11 @@ from { transform: rotate(360deg); }
 to { transform: rotate(0deg);}
 `;
 
-const Message = styled.div`
+const Footer = styled.div`
 display: flex;
 align-items: center;
-margin-bottom: 40px;
-margin-left: 12px;
-margin-right: 12px;
-`;
-
-const Title = styled.span`
-margin: auto 1em;
+position: absolute;
+bottom: 12px;
 text-align: center;
 `;
 
