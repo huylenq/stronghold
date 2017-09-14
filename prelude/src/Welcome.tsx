@@ -19,7 +19,7 @@ export interface IWelcomeOwnProps {
   onEmitterCardClick: () => any;
   onOdontologyCardClick: () => any;
   onSpringsCardClick: () => any;
-  onPetalianCardClick: () => any;
+  onPetalienCardClick: () => any;
 }
 
 export interface IWelcomeStateProps {
@@ -63,8 +63,8 @@ class Welcome extends Component<IWelcomeOwnProps & IWelcomeStateProps, {}> {
             <p>Odontology planar explanation.</p>
             <Tag>WIP</Tag>
           </SLCard>
-          <SLCard onClick={this.props.onPetalianCardClick}>
-            <h5><a>Petalian</a></h5>
+          <SLCard onClick={this.props.onPetalienCardClick}>
+            <h5><a>Petalien</a></h5>
             <p>A prototype of a new platformmer game.</p>
             <Tag>WIP</Tag>
             <Tag>Game</Tag>
@@ -125,7 +125,7 @@ export default connect(
     onEmitterCardClick: () => push('/emitter'),
     onOdontologyCardClick: () => push('/odontology'),
     onSpringsCardClick: () => push('/springs'),
-    onPetalianCardClick: () => window.location.href = '/petalian',
+    onPetalienCardClick: () => window.location.href = '/petalien',
   })(StyledWelcome);
 
 function activeCard(card: string, width?: number, height?: number) {
