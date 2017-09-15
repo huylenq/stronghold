@@ -11,7 +11,7 @@ export default class Spring {
   update() {
     const distance = new Vector(this.anchor.x, this.anchor.y).subtract(this.particle.position);
     distance.length -= this.length;
-    const force = distance.multiplyBy(this.stiffness);
+    const force = distance.multiply(this.stiffness);
     this.particle.accelerate(force);
   }
 

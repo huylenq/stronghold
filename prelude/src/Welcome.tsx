@@ -43,7 +43,7 @@ class Welcome extends Component<IWelcomeOwnProps & IWelcomeStateProps, {}> {
           </SLCard>
           <SLCard onClick={this.props.onSpringsCardClick}>
             <h5><a>Springs</a></h5>
-            <p>Experiments of Springs' physics. Again, inspired by {' '}
+            <p>Experiments of spring physics. Again, inspired by {' '}
               <a href="https://www.youtube.com/user/codingmath/about"
                  onClick={stopPropagation}>
                 CodingMath
