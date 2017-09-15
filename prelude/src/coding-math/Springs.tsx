@@ -31,15 +31,8 @@ export default class Springs extends CanvasComponent<ICanvasComponentProps> {
     this.attachs.forEach(attach => attach.spring.length = value);
   }
 
-  _gravity: number = 3;
   @dat({min: 0, max: 10, step: 0.1})
-  get gravity() {
-    return this._gravity;
-  }
-  set gravity(value: number) {
-    this._gravity = value;
-    this.attachs.forEach(attach => attach.weight.gravity = value);
-  }
+  gravity: number = 3;
 
   _friction: number = .2;
   @dat({min: 0, max: 1, step: 0.1})
@@ -91,6 +84,7 @@ export default class Springs extends CanvasComponent<ICanvasComponentProps> {
     this.root.y = this.mouseY || this.root.y;
     for (let attach of this.attachs) {
       attach.spring.update();
+      attach.weight.gravity = this.gravity;
       attach.weight.update();
     }
     this.root.draw(ctx);
