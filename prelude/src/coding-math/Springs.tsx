@@ -5,55 +5,73 @@ import Spring from './Spring';
 
 export default class Springs extends CanvasComponent<ICanvasComponentProps> {
 
-  weight: Particle;
-  springPoint: Particle;
-
-  spring: Spring;
+  root: Particle;
+  attachs: {weight: Particle, spring: Spring}[] = [];
 
   mouseX: number;
   mouseY: number;
 
+  _stiffness: number = .1;
   @dat({min: 0, max: 1})
   get stiffness() {
-    return this.spring.stiffness;
+    return this._stiffness;
   }
   set stiffness(value: number) {
-    this.spring.stiffness = value;
+    this._stiffness = value;
+    this.attachs.forEach(attach => attach.spring.stiffness = value);
   }
 
+  _springLength: number = 50;
   @dat({min: 0, max: 500})
   get springLength() {
-    return this.spring.length;
+    return this._springLength;
   }
   set springLength(value: number) {
-    this.spring.length = value;
+    this._springLength = value;
+    this.attachs.forEach(attach => attach.spring.length = value);
   }
 
-  @dat({min: 0, max: 5, step: 0.1})
+  _gravity: number = 3;
+  @dat({min: 0, max: 10, step: 0.1})
   get gravity() {
-    return this.weight.gravity;
+    return this._gravity;
   }
   set gravity(value: number) {
-    this.weight.gravity = value;
+    this._gravity = value;
+    this.attachs.forEach(attach => attach.weight.gravity = value);
+  }
+
+  _friction: number = .2;
+  @dat({min: 0, max: 1, step: 0.1})
+  get friction() {
+    return this._friction;
+  }
+  set friction(value: number) {
+    this._friction = value;
+    this.attachs.forEach(attach => attach.weight.friction = value);
   }
 
   constructor(props: ICanvasComponentProps, state: any) {
     super(props, state);
-    this.weight = Particle.create({
-      x: this.props.width / 2,
-      y: this.props.height / 2 + 100
-    });
-    this.weight.radius = 14;
-    this.weight.gravity = 1;
-    this.weight.friction = 0.1;
 
-    this.springPoint = Particle.create({
+    this.root = Particle.create({
       x: this.props.width / 2,
       y: this.props.height / 2
     });
-    this.springPoint.radius = 4;
+    this.root.radius = 4;
+    this.attachs.push(this.attachSpring(this.root));
+    this.attachs.push(this.attachSpring(this.attachs[0].weight));
+    this.attachs.push(this.attachSpring(this.attachs[1].weight));
+    /* this.attachs[0].spring.anchor = this.attachs[2].weight;*/
+  }
 
-    this.spring = new Spring(this.weight, this.springPoint, 50, .1);
+  attachSpring(anchor: IPosition) {
+    const weight = Particle.create({ x: anchor.x + Math.random() * 20, y: anchor.y + Math.random() * 20});
+    weight.radius = 12;
+    weight.gravity = this.gravity;
+    weight.friction = this.friction;
+    const spring = new Spring(weight, anchor, this.springLength, this.stiffness);
+    return { weight, spring };
   }
 
   onMouseMove(event: MouseEvent) {
@@ -61,15 +79,25 @@ export default class Springs extends CanvasComponent<ICanvasComponentProps> {
     this.mouseY = event.clientY;
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
-    this.springPoint.x = this.mouseX || this.springPoint.x;
-    this.springPoint.y = this.mouseY || this.springPoint.y;
-    this.spring.update();
-    this.weight.update();
+  onMouseDown(event: MouseEvent) {
+    this.mouseX = event.clientX;
+    this.mouseY = event.clientY;
+    this.attachs[0].weight.x = this.mouseX;
+    this.attachs[0].weight.y = this.mouseY;
+  }
 
-    this.springPoint.draw(ctx);
-    this.weight.draw(ctx);
-    this.spring.draw(ctx);
+  draw(ctx: CanvasRenderingContext2D) {
+    this.root.x = this.mouseX || this.root.x;
+    this.root.y = this.mouseY || this.root.y;
+    for (let attach of this.attachs) {
+      attach.spring.update();
+      attach.weight.update();
+    }
+    this.root.draw(ctx);
+    for (let attach of this.attachs) {
+      attach.spring.draw(ctx);
+      attach.weight.draw(ctx);
+    }
   }
 
 }

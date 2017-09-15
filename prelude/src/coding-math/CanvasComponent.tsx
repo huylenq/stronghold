@@ -64,6 +64,9 @@ extends React.Component<T, {}> {
     if (this['onMouseMove']) {
       this.ref.addEventListener('mousemove', this['onMouseMove'].bind(this));
     }
+    if (this['onMouseDown']) {
+      this.ref.addEventListener('mousedown', this['onMouseDown'].bind(this));
+    }
 
     if (this.props.dat && this['__datFields']) {
       this.dat = new gdat.GUI();
@@ -75,13 +78,15 @@ extends React.Component<T, {}> {
         if (defined(datField.step)) { config.step(datField.step); }
       }
     }
-
   }
 
   componentWillUnmount() {
     if (this.dat) { this.dat.destroy(); }
     if (this['onMouseMove']) {
       this.ref.removeEventListener('mousemove', this['onMouseMove']);
+    }
+    if (this['onMouseDown']) {
+      this.ref.removeEventListener('mousedown', this['onMouseDown']);
     }
     cancelAnimationFrame(this._requestAnimationFrameId);
   }
