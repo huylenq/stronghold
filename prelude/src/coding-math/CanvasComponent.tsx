@@ -84,13 +84,16 @@ extends React.Component<T, {}> {
       this.dat = new gdat.GUI();
       for (let datField of this['__datFields']) {
         const args = [this, datField.key];
+
+        // Integer slide works with this, or it will have floating values
         if (datField.min) { args.push(datField.min); }
         if (datField.max) { args.push(datField.max); }
+
         const config = this.dat.add.apply(this.dat, args);
 
-        // This style causes integer slider to has floating value
-        /* if (defined(datField.min)) { config.min(datField.min); }*/
-        /* if (defined(datField.max)) { config.max(datField.max); }*/
+        // Without this floating slider won't work
+        if (defined(datField.min)) { config.min(datField.min); }
+        if (defined(datField.max)) { config.max(datField.max); }
 
         if (defined(datField.step)) { config.step(datField.step); }
       }
