@@ -11,7 +11,7 @@ var Stats = function () {
 	container.addEventListener( 'click', function ( event ) {
 
 		event.preventDefault();
-		showPanel( ++ mode % container.childre/.length );
+		showPanel( ++ mode % container.children.length );
 
 	}, false );
 
