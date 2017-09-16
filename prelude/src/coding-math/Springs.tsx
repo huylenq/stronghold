@@ -34,7 +34,7 @@ export default class Springs extends React.Component
         {
           !this.state.canvasMouseDowned &&
           <FloatingHelp>
-            Click to add new spring!
+            Click to add a new spring
           </FloatingHelp>
         }
       </div>
