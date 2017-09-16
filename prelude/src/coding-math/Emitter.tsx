@@ -1,160 +1,135 @@
 import * as React from 'react';
-import dat from 'dat.gui/build/dat.gui.js';
 import Particle from './Particle';
+import CanvasComponent, { dat, ICanvasComponentProps } from './CanvasComponent';
 
-const CANVAS_ID = 'regen-canvas';
+export default class Emitter extends CanvasComponent {
+  particles: Particle[] = [];
 
-export default class Regen extends React.Component {
-  gui: any;
-  canvas: HTMLCanvasElement;
-  requesttAnimationFrameId: number;
+  @dat({min: 1, max: 20})
+  initVelocity = 6;
 
-  render() {
-    return <canvas ref={this.ref}/>;
+  @dat({min: Math.PI * 0.05, max: Math.PI * .5})
+  angle = Math.PI * 0.1;
+
+  _particlesNum = 100;
+  @dat({min: 1, max: 1000, step: 1})
+  get particlesNum() { return this._particlesNum; }
+  set particlesNum(n: number) {
+    this._particlesNum = n;
+    this.initParticles(n);
   }
 
-  componentWillUnmount() {
-    this.gui.destroy();
-    cancelAnimationFrame(this.requesttAnimationFrameId);
+  _gravity = 0.1;
+  @dat({min: 0, max: 1})
+  get gravity() { return this._gravity; }
+  set gravity(gravity: number) {
+    this._gravity = gravity;
+    this.particles.forEach(p => {
+      p.gravity = gravity;
+    });
+  }
+
+  @dat()
+  bounce = false;
+
+  @dat({min: 0, max: 1})
+  bounceFactor = 0.8;
+
+  randomDirection() {
+    return (-Math.PI / 2 + this.angle / 2) - Math.random() * this.angle;
+  }
+
+  initParticles(n: number) {
+    this.particles.length = 0;
+    for (let i = 0; i < n; i++) {
+      this.particles.push(Particle.create({
+        x: this.props.width * 0.5,
+        y: this.props.height,
+        direction: this.randomDirection(),
+        gravity: this.gravity,
+        radius: 2 + Math.random() * 10,
+        speed: this.randomSpeed()
+      }));
+    }
+  }
+
+  randomSpeed() {
+    return this.initVelocity + Math.random() * 6;
+  }
+
+  bounceParticles() {
+    const width = this.props.width,
+          height = this.props.height;
+    for (let i = this.particles.length - 1; i >= 0; i -= 1) {
+      const p = this.particles[i];
+      if (p.x - p.radius < 0) {
+        p.x = p.radius;
+        p.vx = - this.bounceFactor * p.vx;
+        p.vy = this.bounceFactor * p.vy;
+      }
+      if (p.x + p.radius > width) {
+        p.x = width - p.radius;
+        p.vx = - this.bounceFactor * p.vx;
+        p.vy = this.bounceFactor * p.vy;
+      }
+      if (p.y - p.radius < 0) {
+        p.y = p.radius;
+        p.vx = this.bounceFactor * p.vx;
+        p.vy = - this.bounceFactor * p.vy;
+      }
+      if (p.y + p.radius > height) {
+        p.y = height - p.radius;
+        p.vx = this.bounceFactor * p.vx;
+        p.vy = - this.bounceFactor * p.vy;
+      }
+    }
+  }
+
+  collectDeadParticles() {
+    const width = this.props.width,
+          height = this.props.height;
+    for (let i = this.particles.length - 1; i >= 0; i -= 1) {
+      const p = this.particles[i];
+      if (p.x + p.radius < 0
+          || p.x - p.radius > width
+          || p.y + p.radius < 0
+          || p.y - p.radius > height) {
+        p.x = width / 2;
+        p.y = height;
+        p.direction =  this.randomDirection();
+        p.speed = this.randomSpeed();
+      }
+    }
+  }
+
+  removeDeadParticles() {
+    for (let i = this.particles.length - 1; i >= 0; i -= 1) {
+      const p = this.particles[i];
+      if (p.x + p.radius < 0
+          || p.x - p.radius > this.props.width
+          || p.y + p.radius < 0
+          || p.y - p.radius > this.props.height) {
+        this.particles.splice(i, 1);
+      }
+    }
   }
 
   componentDidMount() {
-    const self = this;
-    const canvas = this.canvas,
-          context = canvas.getContext('2d')!,
-          width = window.innerWidth,
-          height = window.innerHeight;
-
-    canvas.width = width * window.devicePixelRatio;
-    canvas.height = height * window.devicePixelRatio;
-    canvas.style.width = window.innerWidth + 'px';
-    canvas.style.height = window.innerHeight + 'px';
-    context.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-    const randomDirection = () => (-Math.PI / 2 + config.angle / 2) - Math.random() * config.angle;
-    const randomSpeed  = () => config.initVelocity + Math.random() * 6;
-
-    const particles: Particle[] = [];
-
-    const config = {
-      _particlesNum: 500,
-      get particlesNum() { return this._particlesNum; },
-      set particlesNum(n: number) {
-        this._particlesNum = n;
-        initParticles(n);
-      },
-      _gravity: 0.1,
-      get gravity() { return this._gravity; },
-      set gravity(gravity: number) {
-        this._gravity = gravity;
-        particles.forEach(p => {
-          p.gravity = gravity;
-        });
-      },
-      initVelocity: 6,
-      angle: Math.PI * 0.1,
-      bounce: false,
-      bounceFactor: 0.8
-    };
-
-    this.gui = new dat.GUI();
-    this.gui.add(config, 'particlesNum', 1, 1000).step(1);
-    this.gui.add(config, 'gravity', 0, 1);
-    this.gui.add(config, 'initVelocity', 1, 20);
-    this.gui.add(config, 'angle', Math.PI * .05, Math.PI * .5);
-    const bouncingGui = this.gui.addFolder('Bouncing');
-    bouncingGui.add(config, 'bounce');
-    bouncingGui.add(config, 'bounceFactor', 0, 1);
-
-    initParticles(config.particlesNum);
-    function initParticles(n: number) {
-      particles.length = 0;
-      for (let i = 0; i < n; i++) {
-        particles.push(Particle.create({
-          x: width * 0.5,
-          y: height,
-          direction: randomDirection(),
-          gravity: config.gravity,
-          radius: 2 + Math.random() * 10,
-          speed: randomSpeed()
-        }));
-      }
-    }
-
-    update();
-    function update() {
-      context.clearRect(0, 0, width, height);
-
-      for (let p of particles) {
-        p.update();
-        if (config.bounce) {
-          bounceParticles();
-        } else {
-          collectDeadParticles();
-        }
-        // removeDeadParticles();
-        p.draw(context);
-      }
-
-      self.requesttAnimationFrameId = requestAnimationFrame(update);
-    }
-
-    function bounceParticles() {
-      for (let i = particles.length - 1; i >= 0; i -= 1) {
-        const p = particles[i];
-        if (p.x - p.radius < 0) {
-          p.x = p.radius;
-          p.vx = - config.bounceFactor * p.vx;
-          p.vy = config.bounceFactor * p.vy;
-        }
-        if (p.x + p.radius > width) {
-          p.x = width - p.radius;
-          p.vx = - config.bounceFactor * p.vx;
-          p.vy = config.bounceFactor * p.vy;
-        }
-        if (p.y - p.radius < 0) {
-          p.y = p.radius;
-          p.vx = config.bounceFactor * p.vx;
-          p.vy = - config.bounceFactor * p.vy;
-        }
-        if (p.y + p.radius > height) {
-          p.y = height - p.radius;
-          p.vx = config.bounceFactor * p.vx;
-          p.vy = - config.bounceFactor * p.vy;
-        }
-      }
-    }
-
-    function collectDeadParticles() {
-      for (let i = particles.length - 1; i >= 0; i -= 1) {
-        const p = particles[i];
-        if (p.x + p.radius < 0
-            || p.x - p.radius > width
-            || p.y + p.radius < 0
-            || p.y - p.radius > height) {
-          p.x = width / 2;
-          p.y = height;
-          p.direction =  randomDirection();
-          p.speed = randomSpeed();
-        }
-      }
-    }
-
-    function removeDeadParticles() {
-      for (let i = particles.length - 1; i >= 0; i -= 1) {
-        const p = particles[i];
-        if (p.x + p.radius < 0
-            || p.x - p.radius > width
-            || p.y + p.radius < 0
-            || p.y - p.radius > height) {
-          particles.splice(i, 1);
-        }
-      }
-    }
+    super.componentDidMount();
+    this.initParticles(this.particlesNum);
   }
 
-  private ref = (ref) => {
-    this.canvas = ref;
+  draw(context: CanvasRenderingContext2D) {
+    for (let p of this.particles) {
+      p.update();
+      if (this.bounce) {
+        this.bounceParticles();
+      } else {
+        this.collectDeadParticles();
+      }
+      // removeDeadParticles();
+      p.draw(context);
+    }
   }
 
 }

@@ -9,6 +9,11 @@ export default {
   aquamarine: 'rgb(115,201,201)',
   u_black: '#666',
   u_blue: 'rgba(0, 120, 255, 0.8)',
+
+  u_white: '#F5F8FA',
+
+  dimmedStroke: '#B4B7B9',
+  dimmedFill: '#767C82',
 };
 
 export const ThreePalette = {

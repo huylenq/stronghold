@@ -7,19 +7,23 @@ class FloatingHelp extends React.Component<{
 
   render() {
     return (
-      <div
-        className={'pt-callout ' + this.props.className}
-      >
-        {this.props.children}
+      <div className={this.props.className}>
+        <div className="pt-callout" style={innerStyle}>
+          {this.props.children}
+        </div>
       </div>
     );
   }
 
 }
 
+const innerStyle = {
+  left: '-50%',
+};
+
 export default styled(FloatingHelp)`
-position: absolute !important;
-top: 12px;
-left: 12px;
-z-index: -1;
+position: absolute;
+top: 20%;
+left: 50%;
+pointer-events: none;
 `;

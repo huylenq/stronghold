@@ -12,7 +12,15 @@ export default class App extends React.Component {
     return (
       <Switch>
         <Route exact path="/" component={Welcome} />
-        <Route path="/emitter" component={Emitter} />
+        <Route path="/emitter"
+               render={() =>
+                 <Emitter
+                   dat stats
+                   width={window.innerWidth}
+                   height={window.innerHeight}
+                 />
+               }
+        />
         <Route
           path="/odontology"
           render={() =>
@@ -24,7 +32,7 @@ export default class App extends React.Component {
         />
         <Route
           path="/springs"
-          component={Springs}
+          render={() => <Springs width={window.innerWidth} height={window.innerHeight} />}
         />
       </Switch>
     );

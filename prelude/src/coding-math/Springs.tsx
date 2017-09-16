@@ -2,12 +2,18 @@ import * as React from 'react';
 import SpringsCanvas from './SpringsCanvas';
 import FloatingHelp from 'components/FloatingHelp';
 
-export default class Springs extends React.Component<
-{},
-{ canvasMouseDowned: boolean }
-> {
+interface ISpringProps {
+  width: number;
+  height: number;
+}
 
-  constructor(props: {}, context: {}) {
+export default class Springs extends React.Component
+<ISpringProps,
+{
+  canvasMouseDowned: boolean
+}> {
+
+  constructor(props: ISpringProps, context: {}) {
     super(props, context);
     this.state = { canvasMouseDowned: false };
   }
@@ -20,9 +26,9 @@ export default class Springs extends React.Component<
     return (
       <div>
         <SpringsCanvas
-          dat
-          width={innerWidth}
-          height={innerHeight}
+          dat stats
+          width={this.props.width}
+          height={this.props.height}
           onMouseDown={this.onCanvasMouseDown}
         />
         {

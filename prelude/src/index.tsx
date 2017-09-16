@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
-import { reducer as welcomeReducer } from './Welcome';
 
 import 'normalize.css';
 import '@blueprintjs/core/dist/blueprint.css';
@@ -23,7 +22,6 @@ const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compo
 const store = createStore(
   combineReducers({
     routing: routerReducer,
-    cards: welcomeReducer,
   }),
   composeEnhancers(
     applyMiddleware(

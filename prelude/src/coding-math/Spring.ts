@@ -1,7 +1,10 @@
 import Particle from './Particle';
 import Vector from './Vector';
+import palette from 'palette';
+import * as color from 'color';
 
 export default class Spring {
+  strokeColor = color(palette.u_white).alpha(0.9).string();
 
   constructor(public particle: Particle,
               public anchor: {x: number, y: number},

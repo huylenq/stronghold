@@ -70,8 +70,9 @@ export default class SpringsCanvas extends CanvasComponent<ISpringsCanvasProps> 
   }
 
   onMouseMove(event: MouseEvent) {
-    this.mouseX = event.clientX;
-    this.mouseY = event.clientY;
+    const bounding = this.ref.getBoundingClientRect();
+    this.mouseX = event.clientX - bounding.left;
+    this.mouseY = event.clientY - bounding.top;
   }
 
   onMouseDown(event: MouseEvent) {

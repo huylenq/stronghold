@@ -2,7 +2,7 @@
     "extends": ["tslint-react"],
     "rules": {
         "jsx-boolean-value": ["never"],
-        "interface-name": [true, "always-prefix"],
+        "interface-name": [false, "always-prefix"],
         "no-string-literal": false,
         "no-any": false,
         "jsx-alignment": ["true"],

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { default as gdat } from 'dat.gui/build/dat.gui.js';
+import Stats from 'vendor/Stats';
 
 function defined(value: any) {
   return value !== null && typeof value !== 'undefined';
@@ -26,14 +27,16 @@ export interface ICanvasComponentProps {
   width: number;
   height: number;
   dat?: boolean;
+  stats?: boolean;
 }
 
 export default
 abstract class CanvasComponent<T extends ICanvasComponentProps = ICanvasComponentProps>
 extends React.Component<T, {}> {
 
-  private ref: HTMLCanvasElement;
+  public ref: HTMLCanvasElement;
   private dat: any;
+  private stats: any;
 
   private _requestAnimationFrameId: number;
 
@@ -49,14 +52,23 @@ extends React.Component<T, {}> {
     canvas.style.height = this.props.height + 'px';
     context.scale(window.devicePixelRatio, window.devicePixelRatio);
 
+    if (this.props.stats) {
+      this.stats = Stats();
+      this.stats.showPanel(0);
+      document.body.appendChild(this.stats.dom);
+    }
+
     let previous;
     const callDraw: FrameRequestCallback = (now) => {
+      if (this.stats) { this.stats.begin(); }
       context.clearRect(0, 0, this.props.width, this.props.height);
       context.save();
+
       this.draw(context, (now - previous) / 1000);
       context.restore();
       previous = now;
       this._requestAnimationFrameId = requestAnimationFrame(callDraw);
+      if (this.stats) { this.stats.end(); }
     };
     // leap to next 'cycle' to avoid null access in subclasses
     window.setTimeout(() => callDraw(previous = performance.now()), 0);
@@ -87,6 +99,10 @@ extends React.Component<T, {}> {
     }
     if (this['onMouseDown']) {
       this.ref.removeEventListener('mousedown', this['onMouseDown']);
+    }
+    if (this.stats) {
+      document.body.removeChild(this.stats.dom);
+      delete this.stats;
     }
     cancelAnimationFrame(this._requestAnimationFrameId);
   }

@@ -1,4 +1,6 @@
 import Vector from './Vector';
+import * as color from 'color';
+import palette from 'palette';
 
 export default class Particle {
   x: number;
@@ -9,6 +11,8 @@ export default class Particle {
   gravity: number;
   radius: number;
   friction: number;
+  // strokeColor = color(palette.u_white).alpha(0.9).string();
+  // fillColor = color(palette.u_white).alpha(0.5).string();
 
   public static create({
     x = 0,
@@ -98,12 +102,15 @@ export default class Particle {
 
   draw(context: CanvasRenderingContext2D) {
     context.beginPath();
+    context.strokeStyle = palette.u_white;
+    // context.fillStyle = palette.particleFill;
     context.arc(this.x,
                 this.y,
                 this.radius,
                 0, Math.PI * 2,
                 false);
-    context.fill();
+    context.stroke();
+    // context.fill();
   }
 
 }
