@@ -11,12 +11,16 @@ export default class Emitter extends CanvasComponent {
   @dat({min: Math.PI * 0.05, max: Math.PI * .5})
   angle = Math.PI * 0.1;
 
-  _particlesNum = 100;
+  _particlesNum = 1;
   @dat({min: 1, max: 1000, step: 1})
   get particlesNum() { return this._particlesNum; }
   set particlesNum(n: number) {
+    if (n < this._particlesNum) {
+      this.decreaseParticles(this._particlesNum - n);
+    } else {
+      this.increaseParticles(n - this._particlesNum);
+    }
     this._particlesNum = n;
-    this.initParticles(n);
   }
 
   _gravity = 0.1;
@@ -41,7 +45,11 @@ export default class Emitter extends CanvasComponent {
 
   initParticles(n: number) {
     this.particles.length = 0;
-    for (let i = 0; i < n; i++) {
+    this.increaseParticles(n);
+  }
+
+  increaseParticles(increment: number) {
+    for (let i = 0; i < increment; i++) {
       this.particles.push(Particle.create({
         x: this.props.width * 0.5,
         y: this.props.height,
@@ -51,6 +59,10 @@ export default class Emitter extends CanvasComponent {
         speed: this.randomSpeed()
       }));
     }
+  }
+
+  decreaseParticles(decrement: number) {
+    this.particles = this.particles.slice(0, this.particles.length - decrement);
   }
 
   randomSpeed() {
