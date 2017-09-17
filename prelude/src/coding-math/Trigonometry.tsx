@@ -12,7 +12,8 @@ import { Table } from '@blueprintjs/table';
 export default class Trigonometry extends React.Component<
 {},
 {
-  pi: string,
+  angle: number,
+  /* pi: string,*/
   dragToChange: boolean,
   dragToChangeTooltip: boolean,
 }
@@ -23,14 +24,16 @@ export default class Trigonometry extends React.Component<
   constructor(props: any, context: any) {
     super(props, context);
     this.state = {
-      pi: '0.00',
+      angle: 0,
+      /* pi: '0.00',*/
       dragToChange: false,
       dragToChangeTooltip: false,
     };
   }
 
   onAngleChange = (radian: number): void => {
-    this.setState({pi: (radian / Math.PI).toFixed(2)});
+    this.setState({angle: radian});
+    /* this.setState({pi: (radian / Math.PI).toFixed(2)});*/
   }
 
   onSwitchDragToChange = () => {
@@ -78,11 +81,13 @@ export default class Trigonometry extends React.Component<
           <thead>
             <tr>
               <th>Radian</th>
+              <th>Degree</th>
             </tr>
           </thead>
           <tbody>
           <tr>
-            <td>{this.state.pi} π</td>
+            <FixedTd>{(this.state.angle / Math.PI).toFixed(2)} π</FixedTd>
+            <FixedTd>{(this.state.angle * 180).toFixed(2)}°</FixedTd>
           </tr>
           </tbody>
         </SimpleTable>
@@ -91,6 +96,10 @@ export default class Trigonometry extends React.Component<
   }
 
 }
+
+const FixedTd = styled.td`
+  width: 90px;
+`;
 
 const Controls = styled.div`
 position: absolute;
