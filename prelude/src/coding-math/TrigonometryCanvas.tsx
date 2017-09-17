@@ -194,13 +194,14 @@ export default class TrigonometryCanvas extends CanvasComponent<ITrigonometryCan
       ctx.setLineDash([]);
       ctx.stroke();
 
+      // Tangent value label
       ctx.textAlign = factor > 0 ? 'left' : 'right';
       const offsetX = factor > 0 ? 6 : -8;
       ctx.strokeText(`tan = ${vector.tan.toFixed(2)}`,
                      tangentPoint.x + offsetX,
-                     clamp(tangentPoint.y, 16, this.height - 16));
+                     clamp(tangentPoint.y, 16, this.height - 8));
     } else {
-      const y = degreePoint.y > origin.y ? this.height - 16 : 16;
+      const y = degreePoint.y > origin.y ? this.height - 8 : 16;
       const factor = degreePoint.y > origin.y ? 1 : -1;
       const sign = degreePoint.y > origin.y ? '+' : '-';
 
