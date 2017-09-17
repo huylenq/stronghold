@@ -5,6 +5,8 @@ import CanvasComponent, { dat, ICanvasComponentProps } from './CanvasComponent';
 export default class Emitter extends CanvasComponent {
   particles: Particle[] = [];
 
+  massParticle: Particle;
+
   @dat({min: 1, max: 20})
   initVelocity = 6;
 
@@ -46,6 +48,11 @@ export default class Emitter extends CanvasComponent {
   initParticles(n: number) {
     this.particles.length = 0;
     this.increaseParticles(n);
+    /* if (this.massParticle) {*/
+    /* for (let p of this.particles) {*/
+    /* p.gravitations = [this.massParticle];*/
+    /* }*/
+    /* }*/
   }
 
   increaseParticles(increment: number) {
@@ -128,10 +135,20 @@ export default class Emitter extends CanvasComponent {
 
   componentDidMount() {
     super.componentDidMount();
+
+    /* this.massParticle = Particle.create({*/
+    /* x: this.props.width / 2,*/
+    /* y: this.props.height / 3,*/
+    /* mass: 100,*/
+    /* radius: 20,*/
+    /* });*/
+    /* this.massParticle.strokeColor = 'yellow';*/
+
     this.initParticles(this.particlesNum);
   }
 
   draw(context: CanvasRenderingContext2D) {
+    /* this.massParticle.draw(context);*/
     for (let p of this.particles) {
       p.update();
       if (this.bounce) {

@@ -5,7 +5,7 @@ import Spring from './Spring';
 import { connect } from 'react-redux';
 
 export interface ISpringsCanvasProps extends ICanvasComponentProps {
-  onMouseDown?: (event: MouseEvent) => void;
+  onMouseDown?: () => void;
 }
 
 export default class SpringsCanvas extends CanvasComponent<ISpringsCanvasProps> {
@@ -69,19 +69,18 @@ export default class SpringsCanvas extends CanvasComponent<ISpringsCanvasProps> 
     return { weight, spring };
   }
 
-  onMouseMove(event: MouseEvent) {
-    const bounding = this.ref.getBoundingClientRect();
-    this.mouseX = event.clientX - bounding.left;
-    this.mouseY = event.clientY - bounding.top;
+  onMouseMove({x, y}: IPosition) {
+    this.mouseX = x;
+    this.mouseY = y;
   }
 
-  onMouseDown(event: MouseEvent) {
-    this.mouseX = event.clientX;
-    this.mouseY = event.clientY;
+  onMouseDown({x, y}: IPosition) {
+    this.mouseX = x;
+    this.mouseY = y;
     const newSpring = this.attachSpring(this.root);
     this.attachs[this.attachs.length - 1].spring.anchor = newSpring.weight;
     this.attachs.push(newSpring);
-    if (this.props.onMouseDown) { this.props.onMouseDown(event); }
+    if (this.props.onMouseDown) { this.props.onMouseDown(); }
   }
 
   draw(ctx: CanvasRenderingContext2D) {

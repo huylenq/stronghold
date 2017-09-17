@@ -34,9 +34,13 @@ export default
 abstract class CanvasComponent<T extends ICanvasComponentProps = ICanvasComponentProps>
 extends React.Component<T, {}> {
 
+  public width: number;
+  public height: number;
+
   public ref: HTMLCanvasElement;
   private dat: any;
   private stats: any;
+
 
   private _requestAnimationFrameId: number;
 
@@ -46,8 +50,8 @@ extends React.Component<T, {}> {
     const canvas = this.ref;
     const context = canvas.getContext('2d')!;
 
-    canvas.width = this.props.width as number * window.devicePixelRatio;
-    canvas.height = this.props.height as number * window.devicePixelRatio;
+    this.width = canvas.width = this.props.width as number * window.devicePixelRatio;
+    this.height = canvas.height = this.props.height as number * window.devicePixelRatio;
     canvas.style.width = this.props.width + 'px';
     canvas.style.height = this.props.height + 'px';
     context.scale(window.devicePixelRatio, window.devicePixelRatio);
@@ -74,10 +78,10 @@ extends React.Component<T, {}> {
     window.setTimeout(() => callDraw(previous = performance.now()), 0);
 
     if (this['onMouseMove']) {
-      this.ref.addEventListener('mousemove', this['onMouseMove'].bind(this));
+      this.ref.addEventListener('mousemove', this.forwardMouseMove);
     }
     if (this['onMouseDown']) {
-      this.ref.addEventListener('mousedown', this['onMouseDown'].bind(this));
+      this.ref.addEventListener('mousedown', this.forwardMouseDown);
     }
 
     if (this.props.dat && this['__datFields']) {
@@ -103,10 +107,10 @@ extends React.Component<T, {}> {
   componentWillUnmount() {
     if (this.dat) { this.dat.destroy(); }
     if (this['onMouseMove']) {
-      this.ref.removeEventListener('mousemove', this['onMouseMove']);
+      this.ref.removeEventListener('mousemove', this.forwardMouseMove);
     }
     if (this['onMouseDown']) {
-      this.ref.removeEventListener('mousedown', this['onMouseDown']);
+      this.ref.removeEventListener('mousedown', this.forwardMouseDown);
     }
     if (this.stats) {
       document.body.removeChild(this.stats.dom);
@@ -121,6 +125,26 @@ extends React.Component<T, {}> {
 
   captureRef = (ref) => {
     this.ref = ref;
+  }
+
+  private forwardMouseMove = (event: MouseEvent) => {
+    const bounding = this.ref.getBoundingClientRect();
+    if (this['onMouseMove']) {
+      this['onMouseMove']({
+        x: bounding.left + event.clientX,
+        y: bounding.top + event.clientY
+      });
+    }
+  }
+
+  private forwardMouseDown = (event: MouseEvent) => {
+    const bounding = this.ref.getBoundingClientRect();
+    if (this['onMouseDown']) {
+      this['onMouseDown']({
+        x: bounding.left + event.clientX,
+        y: bounding.top + event.clientY
+      });
+    }
   }
 
 }

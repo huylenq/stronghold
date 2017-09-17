@@ -9,10 +9,11 @@ export default class Particle {
   vy: number;
   mass: number;
   gravity: number;
+  gravitations: Particle[] = [];
   radius: number;
   friction: number;
-  // strokeColor = color(palette.u_white).alpha(0.9).string();
-  // fillColor = color(palette.u_white).alpha(0.5).string();
+
+  strokeColor = palette.u_white;
 
   public static create({
     x = 0,
@@ -22,7 +23,8 @@ export default class Particle {
     mass = 0,
     gravity = 0,
     radius = 10,
-    friction = 0}: {
+    friction = 0,
+  }: {
       x?: number,
       y?: number,
       speed?: number
@@ -73,7 +75,25 @@ export default class Particle {
     return Vector.of(this.x, this.y);
   }
 
+  get velocity() {
+    return Vector.of(this.vx, this.vy);
+  }
+
   update() {
+    // for (let gravitation of this.gravitations) {
+    //   const d = gravitation.position.subtract(this.position);
+    //   const r = d.length;
+    //   if (r - gravitation.radius - this.radius > 0) {
+    //     const g = 1;
+    //     const f = g * gravitation.mass / (r * r);
+    //     const force = d.withLength(f);
+    //     this.accelerate(force);
+    //   } else {
+    //     const impactPoint = this.position.add(d.withLength(this.radius));
+    //     const tangent = d.rotateBy(Math.PI / 2);
+    //   }
+    // }
+
     this.vy += this.gravity;
     this.vx *= 1 - this.friction;
     this.vy *= 1 - this.friction;
@@ -102,15 +122,13 @@ export default class Particle {
 
   draw(context: CanvasRenderingContext2D) {
     context.beginPath();
-    context.strokeStyle = palette.u_white;
-    // context.fillStyle = palette.particleFill;
+    context.strokeStyle = this.strokeColor;
     context.arc(this.x,
                 this.y,
                 this.radius,
                 0, Math.PI * 2,
                 false);
     context.stroke();
-    // context.fill();
   }
 
 }

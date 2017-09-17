@@ -40,6 +40,12 @@ export default class Vector implements IPosition {
     this.y = length * Math.sin(angle);
   }
 
+  withLength(length: number) {
+    const newVector = new Vector(this.x, this.y);
+    newVector.length = length;
+    return newVector;
+  }
+
   rotate(degree: number) {
     return new Vector(this.x, this.y).rotateBy(degree);
   }
