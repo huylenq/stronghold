@@ -77,7 +77,7 @@ export default class TrigonometryCanvas extends CanvasComponent<ITrigonometryCan
     ctx.strokeText('- x', 20, origin.y - 10);
     ctx.strokeText('+ x', this.width - 30, origin.y - 10);
     ctx.strokeText('- y', origin.x + 10, 20);
-    ctx.strokeText('+ y', origin.x + 10, this.height - 30);
+    ctx.strokeText('+ y', origin.x + 10, this.height - 20);
 
     ctx.restore();
 
