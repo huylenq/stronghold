@@ -26,7 +26,7 @@ export default class Springs extends React.Component
     return (
       <div>
         <SpringsCanvas
-          dat stats
+          dat
           width={this.props.width}
           height={this.props.height}
           onMouseDown={this.onCanvasMouseDown}
