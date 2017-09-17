@@ -48,6 +48,10 @@ export default class Vector implements IPosition {
     return this._y / this.length;
   }
 
+  get tan() {
+    return this._y / this._x;
+  }
+
   withLength(length: number) {
     const newVector = new Vector(this.x, this.y);
     newVector.length = length;

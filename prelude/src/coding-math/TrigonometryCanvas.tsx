@@ -126,9 +126,9 @@ export default class TrigonometryCanvas extends CanvasComponent<ITrigonometryCan
     ctx.moveTo(origin.x, origin.y);
     ctx.lineTo(cosPoint.x, cosPoint.y);
     ctx.strokeStyle = Colors.RED3;
-    ctx.lineWidth = 2;
+    /* ctx.lineWidth = 2;*/
     ctx.stroke();
-    ctx.lineWidth = 1;
+    /* ctx.lineWidth = 1;*/
     ctx.strokeText(`cos = ${vector.cos.toFixed(2)}`, cosPoint.x - 10, cosPoint.y + 12);
     ctx.restore();
 
@@ -153,10 +153,10 @@ export default class TrigonometryCanvas extends CanvasComponent<ITrigonometryCan
     ctx.moveTo(origin.x, origin.y);
     ctx.lineTo(sinPoint.x, sinPoint.y);
     ctx.strokeStyle = Colors.GREEN3;
-    ctx.lineWidth = 2;
+    /* ctx.lineWidth = 2;*/
     ctx.stroke();
 
-    ctx.lineWidth = 1;
+    /* ctx.lineWidth = 1;*/
     ctx.strokeText(`sin = ${vector.sin.toFixed(2)}`,
                    sinPoint.x - 10,
                    sinPoint.y + (vector.sin > 0 ? 12 : -12));
@@ -172,6 +172,44 @@ export default class TrigonometryCanvas extends CanvasComponent<ITrigonometryCan
 
     ctx.restore();
 
+    // Tangent
+    ctx.save();
+    if (degreePoint.x !== origin.x) {
+      ctx.beginPath();
+      ctx.moveTo(degreePoint.x, degreePoint.y);
+      let factor = degreePoint.x > origin.x ? 1 : -1;
+      const tangentPoint = {
+        x: origin.x + factor * RADIUS,
+        y: origin.y + factor * vector.tan * RADIUS
+      };
+      ctx.lineTo(tangentPoint.x, tangentPoint.y);
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = color(palette.u_white).alpha(.5).string();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.strokeStyle = Colors.GOLD3;
+      /* ctx.lineWidth = 2;*/
+      ctx.moveTo(tangentPoint.x, tangentPoint.y);
+      ctx.lineTo(tangentPoint.x, origin.y);
+      ctx.setLineDash([]);
+      ctx.stroke();
+
+      ctx.textAlign = factor > 0 ? 'left' : 'right';
+      const offsetX = factor > 0 ? 6 : -8;
+      ctx.strokeText(`tan = ${vector.tan.toFixed(2)}`,
+                     tangentPoint.x + offsetX,
+                     clamp(tangentPoint.y, 16, this.height - 16));
+
+    } else {
+      ctx.strokeStyle = Colors.GOLD3;
+      ctx.textAlign = 'right';
+      ctx.strokeText("tan = ∞", origin.x - 4, degreePoint.y > origin.y ? this.height - 16 : 16);
+    }
+    ctx.restore();
   }
 
+}
+
+function clamp(x: number, min: number, max: number) {
+  return x > max ? max : (x < min ? min : x);
 }
