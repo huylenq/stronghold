@@ -177,7 +177,7 @@ export default class TrigonometryCanvas extends CanvasComponent<ITrigonometryCan
     if (degreePoint.x !== origin.x) {
       ctx.beginPath();
       ctx.moveTo(degreePoint.x, degreePoint.y);
-      let factor = degreePoint.x > origin.x ? 1 : -1;
+      const factor = degreePoint.x > origin.x ? 1 : -1;
       const tangentPoint = {
         x: origin.x + factor * RADIUS,
         y: origin.y + factor * vector.tan * RADIUS
@@ -201,10 +201,22 @@ export default class TrigonometryCanvas extends CanvasComponent<ITrigonometryCan
                      clamp(tangentPoint.y, 16, this.height - 16));
 
     } else {
+      const y = degreePoint.y > origin.y ? this.height - 16 : 16;
+      const factor = degreePoint.y > origin.y ? 1 : -1;
+      const sign = degreePoint.y > origin.y ? '+' : '-';
+
+      // Still draw the project with infinity tangent
+      ctx.save();
+      ctx.moveTo(degreePoint.x, degreePoint.y);
+      ctx.lineTo(origin.x, origin.y + factor * this.height);
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = color(palette.u_white).alpha(.5).string();
+      ctx.stroke();
+      ctx.restore();
+
+      // Tangent value label
       ctx.strokeStyle = Colors.GOLD3;
       ctx.textAlign = 'right';
-      const y = degreePoint.y > origin.y ? this.height - 16 : 16;
-      const sign = degreePoint.y > origin.y ? '+' : '-';
       ctx.strokeText(`tan = ${sign}∞`, origin.x - 4, y);
     }
     ctx.restore();
