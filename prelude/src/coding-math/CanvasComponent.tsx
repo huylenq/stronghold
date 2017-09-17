@@ -41,7 +41,6 @@ extends React.Component<T, {}> {
   private dat: any;
   private stats: any;
 
-
   private _requestAnimationFrameId: number;
 
   abstract draw(context: CanvasRenderingContext2D, delta: number);
@@ -50,8 +49,10 @@ extends React.Component<T, {}> {
     const canvas = this.ref;
     const context = canvas.getContext('2d')!;
 
-    this.width = canvas.width = this.props.width as number * window.devicePixelRatio;
-    this.height = canvas.height = this.props.height as number * window.devicePixelRatio;
+    canvas.width = this.props.width as number * window.devicePixelRatio;
+    canvas.height = this.props.height as number * window.devicePixelRatio;
+    this.width = this.props.width;
+    this.height = this.props.height;
     canvas.style.width = this.props.width + 'px';
     canvas.style.height = this.props.height + 'px';
     context.scale(window.devicePixelRatio, window.devicePixelRatio);
