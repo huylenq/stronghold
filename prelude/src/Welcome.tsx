@@ -11,7 +11,7 @@ import Card from 'components/Card';
 import { createSelector } from 'reselect';
 import Cube from 'three/Cube';
 import Springs from 'coding-math/Springs';
-import { isMobile } from 'utils/platform';
+import { isTouchDevice } from 'utils/platform';
 
 function stopPropagation(event: React.SyntheticEvent<any>) {
   event.stopPropagation();
@@ -37,7 +37,7 @@ class Welcome extends React.Component<IWelcomeProps> {
   render() {
     return (
       <div className={this.props.className}>
-        <Cube width={100} height={100} z={4} autoRotate={isMobile()} />
+        <Cube width={100} height={100} z={4} autoRotate={isTouchDevice()} />
         <Credit>
           <div className="pt-callout">
             <i>I make things</i>

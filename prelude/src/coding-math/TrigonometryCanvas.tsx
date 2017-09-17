@@ -199,7 +199,6 @@ export default class TrigonometryCanvas extends CanvasComponent<ITrigonometryCan
       ctx.strokeText(`tan = ${vector.tan.toFixed(2)}`,
                      tangentPoint.x + offsetX,
                      clamp(tangentPoint.y, 16, this.height - 16));
-
     } else {
       const y = degreePoint.y > origin.y ? this.height - 16 : 16;
       const factor = degreePoint.y > origin.y ? 1 : -1;
