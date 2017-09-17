@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { default as gdat } from 'dat.gui/build/dat.gui.js';
 import Stats from 'vendor/Stats';
+import palette from 'palette';
 
 function defined(value: any) {
   return value !== null && typeof value !== 'undefined';
@@ -64,11 +65,12 @@ extends React.Component<T, {}> {
     }
 
     let previous;
+
+    context.strokeStyle = palette.u_white;
     const callDraw: FrameRequestCallback = (now) => {
       if (this.stats) { this.stats.begin(); }
       context.clearRect(0, 0, this.props.width, this.props.height);
       context.save();
-
       this.draw(context, (now - previous) / 1000);
       context.restore();
       previous = now;
