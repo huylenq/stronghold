@@ -203,7 +203,9 @@ export default class TrigonometryCanvas extends CanvasComponent<ITrigonometryCan
     } else {
       ctx.strokeStyle = Colors.GOLD3;
       ctx.textAlign = 'right';
-      ctx.strokeText("tan = ∞", origin.x - 4, degreePoint.y > origin.y ? this.height - 16 : 16);
+      const y = degreePoint.y > origin.y ? this.height - 16 : 16;
+      const sign = degreePoint.y > origin.y ? '+' : '-';
+      ctx.strokeText(`tan = ${sign}∞`, origin.x - 4, y);
     }
     ctx.restore();
   }
