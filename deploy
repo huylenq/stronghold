@@ -1,0 +1,7 @@
+#!/bin/bash
+# git push
+ssh -l root linode " \
+cd stronghold/prelude; \
+git pull; \
+yarn build; \
+"
