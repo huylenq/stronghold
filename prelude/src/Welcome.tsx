@@ -18,6 +18,7 @@ function stopPropagation(event: React.SyntheticEvent<any>) {
 
 export interface IWelcomeOwnProps {
   className?: string;
+  onTrigonometryCardClick: () => any;
   onEmitterCardClick: () => any;
   onOdontologyCardClick: () => any;
   onSpringsCardClick: () => any;
@@ -38,6 +39,10 @@ class Welcome extends React.Component<IWelcomeProps> {
         <Cube width={100} height={100} z={4} />
         <div>
           <Deck id="deck">
+            <SLCard onClick={this.props.onTrigonometryCardClick}>
+              <h5><a>Trigonometry</a></h5>
+              <p>Trigonometry interactive unit circle</p>
+            </SLCard>
             <SLCard onClick={this.props.onEmitterCardClick}>
               <h5><a>Particles Emitter</a></h5>
               <p>A simple particles emitter with some adhoc physics. Inspired by this excellent series{' '}
@@ -58,12 +63,12 @@ class Welcome extends React.Component<IWelcomeProps> {
             </SLCard>
             <SLCard onClick={this.props.onOdontologyCardClick}>
               <h5><a>Odontology</a></h5>
-              <p>Odontology planar explanation.</p>
+              <p>Odontology planar explanation</p>
               <Tag>WIP</Tag>
             </SLCard>
             <SLCard onClick={this.props.onPetalienCardClick}>
               <h5><a>Petalien</a></h5>
-              <p>A prototype of a new platformmer game.</p>
+              <p>A prototype of a new platformer game</p>
               <Tag>WIP</Tag>
               <Tag>Game</Tag>
             </SLCard>
@@ -121,6 +126,7 @@ width: 260px;
 export default connect(
   null,
   {
+    onTrigonometryCardClick: () => push('/trigonometry'),
     onEmitterCardClick: () => push('/emitter'),
     onOdontologyCardClick: () => push('/odontology'),
     onSpringsCardClick: () => push('/springs'),

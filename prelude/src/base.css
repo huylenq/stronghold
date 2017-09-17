@@ -1,6 +1,3 @@
-body {
-}
-
 #root {
   background-color: #EEE;
   min-width: 100vw;
@@ -9,4 +6,8 @@ body {
 
 #root.pt-dark {
   background-color: #293742
+}
+
+input:focus{
+    outline: none;
 }

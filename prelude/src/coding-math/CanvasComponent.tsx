@@ -86,6 +86,9 @@ extends React.Component<T, {}> {
     if (this['onMouseDown']) {
       this.ref.addEventListener('mousedown', this.forwardMouseDown);
     }
+    if (this['onMouseUp']) {
+      this.ref.addEventListener('mouseup', this.forwardMouseUp);
+    }
 
     if (this.props.dat && this['__datFields']) {
       this.dat = new gdat.GUI();
@@ -114,6 +117,9 @@ extends React.Component<T, {}> {
     }
     if (this['onMouseDown']) {
       this.ref.removeEventListener('mousedown', this.forwardMouseDown);
+    }
+    if (this['onMouseUp']) {
+      this.ref.removeEventListener('mouseup', this.forwardMouseUp);
     }
     if (this.stats) {
       document.body.removeChild(this.stats.dom);
@@ -144,6 +150,16 @@ extends React.Component<T, {}> {
     const bounding = this.ref.getBoundingClientRect();
     if (this['onMouseDown']) {
       this['onMouseDown']({
+        x: bounding.left + event.clientX,
+        y: bounding.top + event.clientY
+      });
+    }
+  }
+
+  private forwardMouseUp = (event: MouseEvent) => {
+    const bounding = this.ref.getBoundingClientRect();
+    if (this['onMouseUp']) {
+      this['onMouseUp']({
         x: bounding.left + event.clientX,
         y: bounding.top + event.clientY
       });

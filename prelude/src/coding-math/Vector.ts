@@ -40,6 +40,14 @@ export default class Vector implements IPosition {
     this.y = length * Math.sin(angle);
   }
 
+  get cos() {
+    return this._x / this.length;
+  }
+
+  get sin() {
+    return this._y / this.length;
+  }
+
   withLength(length: number) {
     const newVector = new Vector(this.x, this.y);
     newVector.length = length;
@@ -59,7 +67,7 @@ export default class Vector implements IPosition {
     return new Vector(this.x + other.x, this.y + other.y);
   }
 
-  subtract(other: Vector) {
+  subtract(other: IPosition) {
     return new Vector(this.x - other.x, this.y - other.y);
   }
 

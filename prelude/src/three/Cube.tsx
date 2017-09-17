@@ -6,7 +6,7 @@ import * as Color from 'color';
 import Vector from 'coding-math/Vector';
 
 export interface ICubeProps extends IThreeComponentProps {
-  autoRotate?: boolean
+  autoRotate?: boolean;
   rotationSpeed?: number;
   angle?: 0;
 }
@@ -34,7 +34,6 @@ export default class Cube extends ThreeComponent<ICubeProps> {
     super.componentWillUnmount();
     document.body.removeEventListener('mousemove', this.onMouseMoveOnBody);
   }
-
 
   start() {
     const geometry = new THREE.BoxGeometry(1, 1, 1);

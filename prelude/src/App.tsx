@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 
+import Trigonometry from 'coding-math/Trigonometry';
 import Emitter from 'coding-math/Emitter';
 import Odontology from 'odontology/Odontology';
 import Welcome from 'Welcome';
@@ -12,6 +13,9 @@ export default class App extends React.Component {
     return (
       <Switch>
         <Route exact path="/" component={Welcome} />
+        <Route path="/trigonometry"
+               render={() => <Trigonometry />}
+        />
         <Route path="/emitter"
                render={() =>
                  <Emitter
