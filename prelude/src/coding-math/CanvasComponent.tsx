@@ -112,15 +112,6 @@ extends React.Component<T, {}> {
 
   componentWillUnmount() {
     if (this.dat) { this.dat.destroy(); }
-    if (this['onMouseMove']) {
-      this.ref.removeEventListener('mousemove', this.forwardMouseMove);
-    }
-    if (this['onMouseDown']) {
-      this.ref.removeEventListener('mousedown', this.forwardMouseDown);
-    }
-    if (this['onMouseUp']) {
-      this.ref.removeEventListener('mouseup', this.forwardMouseUp);
-    }
     if (this.stats) {
       document.body.removeChild(this.stats.dom);
       delete this.stats;
@@ -129,7 +120,7 @@ extends React.Component<T, {}> {
   }
 
   render() {
-    return <canvas ref={this.captureRef} />;
+    return <canvas style={{userSelect: 'none'}} ref={this.captureRef} />;
   }
 
   captureRef = (ref) => {

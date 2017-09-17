@@ -27,12 +27,17 @@ export default class Cube extends ThreeComponent<ICubeProps> {
 
   componentDidMount() {
     super.componentDidMount();
-    document.body.addEventListener('mousemove', this.onMouseMoveOnBody);
+    if (!this.props.autoRotate) {
+      document.body.addEventListener('mousemove', this.onMouseMoveOnBody);
+    }
+
   }
 
   componentWillUnmount() {
     super.componentWillUnmount();
-    document.body.removeEventListener('mousemove', this.onMouseMoveOnBody);
+    if (!this.props.autoRotate) {
+      document.body.removeEventListener('mousemove', this.onMouseMoveOnBody);
+    }
   }
 
   start() {
@@ -45,10 +50,8 @@ export default class Cube extends ThreeComponent<ICubeProps> {
     const cube = this.cube = new THREE.Mesh(geometry, material);
     this.camera.position.z = 4;
     this.scene.add(cube);
-    const direction = new Vector();
-    direction.angle = this.props.angle!!;
-    this.cube.rotation.x = direction.x;
-    this.cube.rotation.y = direction.y;
+    this.cube.rotation.x = Math.PI / 4;
+    this.cube.rotation.y = Math.PI / 4;
   }
 
   update(delta: number) {

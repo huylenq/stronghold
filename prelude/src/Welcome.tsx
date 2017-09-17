@@ -11,6 +11,7 @@ import Card from 'components/Card';
 import { createSelector } from 'reselect';
 import Cube from 'three/Cube';
 import Springs from 'coding-math/Springs';
+import { isMobile } from 'utils/platform';
 
 function stopPropagation(event: React.SyntheticEvent<any>) {
   event.stopPropagation();
@@ -36,7 +37,14 @@ class Welcome extends React.Component<IWelcomeProps> {
   render() {
     return (
       <div className={this.props.className}>
-        <Cube width={100} height={100} z={4} />
+        <Cube width={100} height={100} z={4} autoRotate={isMobile()} />
+        <Credit>
+          <div className="pt-callout">
+            <i>I make things</i>
+            {' - '}
+            <a className="pt-icon-standard pt-icon-envelope" href="mailto:huy.lenq@gmail.com"> huy.lenq@gmail.com</a>
+          </div>
+        </Credit>
         <div>
           <Deck id="deck">
             <SLCard onClick={this.props.onTrigonometryCardClick}>
@@ -74,13 +82,6 @@ class Welcome extends React.Component<IWelcomeProps> {
             </SLCard>
           </Deck>
         </div>
-        <Footer cardActive={!!this.props.activeCard}>
-          <div className="pt-callout">
-            <i>I make things</i>
-            {' - '}
-            <a className="pt-icon-standard pt-icon-envelope" href="mailto:huy.lenq@gmail.com"> huy.lenq@gmail.com</a>
-          </div>
-        </Footer>
       </div>
     );
   }
@@ -91,12 +92,8 @@ from { transform: rotate(360deg); }
 to { transform: rotate(0deg);}
 `;
 
-interface IFooterProps { cardActive: boolean; }
-const Footer = styled.div`
-position: ${(props: IFooterProps) => props.cardActive ? 'relative' : 'absolute'};
-bottom: ${(props: IFooterProps) => props.cardActive ? 'none' : '12px'};
-margin-top: 10px;
-margin-bottom: 10px;
+const Credit = styled.div`
+margin-bottom: 24px;
 align-items: center;
 text-align: center;
 `;
@@ -106,7 +103,7 @@ display: flex;
 flex-grow: 1;
 flex-direction: column;
 align-items: center;
-padding-top: 5%;
+padding-top: 12px;
 `;
 
 const Deck = styled.div`
