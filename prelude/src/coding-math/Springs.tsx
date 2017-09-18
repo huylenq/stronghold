@@ -19,7 +19,9 @@ export default class Springs extends React.Component
   }
 
   onCanvasMouseDown = () => {
-    this.setState({canvasMouseDowned: true});
+    if (!this.state.canvasMouseDowned) {
+      this.setState({canvasMouseDowned: true});
+    }
   }
 
   render() {

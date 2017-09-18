@@ -30,6 +30,12 @@ export default class Vector implements IPosition {
     this.y = length * Math.sin(angle);
   }
 
+  angleWith(other: Vector) {
+    const angle1 = Math.abs(this.angle - other.angle);
+    const angle2 = 180 - angle1;
+    return [Math.min(angle1, angle2), Math.max(angle1, angle2)];
+  }
+
   get length() {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }

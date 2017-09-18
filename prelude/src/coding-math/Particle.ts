@@ -80,19 +80,16 @@ export default class Particle {
   }
 
   update() {
-    // for (let gravitation of this.gravitations) {
-    //   const d = gravitation.position.subtract(this.position);
-    //   const r = d.length;
-    //   if (r - gravitation.radius - this.radius > 0) {
-    //     const g = 1;
-    //     const f = g * gravitation.mass / (r * r);
-    //     const force = d.withLength(f);
-    //     this.accelerate(force);
-    //   } else {
-    //     const impactPoint = this.position.add(d.withLength(this.radius));
-    //     const tangent = d.rotateBy(Math.PI / 2);
-    //   }
-    // }
+    for (let gravitation of this.gravitations) {
+      const d = gravitation.position.subtract(this.position);
+      const r = d.length;
+      if (r - gravitation.radius - this.radius > 0) {
+        const g = 1;
+        const f = g * gravitation.mass / (r * r);
+        const force = d.withLength(f);
+        this.accelerate(force);
+      }
+    }
 
     this.vy += this.gravity;
     this.vx *= 1 - this.friction;

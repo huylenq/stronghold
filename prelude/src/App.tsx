@@ -17,13 +17,7 @@ export default class App extends React.Component {
                render={() => <Trigonometry />}
         />
         <Route path="/emitter"
-               render={() =>
-                 <Emitter
-                   dat stats
-                   width={window.innerWidth}
-                   height={window.innerHeight}
-                 />
-               }
+               component={Emitter}
         />
         <Route
           path="/odontology"
