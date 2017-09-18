@@ -39,6 +39,7 @@ export default class EmitterCanvas extends CanvasComponent<IEmitterCanvasProps> 
       this.increaseParticles(n - this._particlesNum);
     }
     this._particlesNum = n;
+    this.updateSunGravity();
   }
 
   _baseGravity = 0.1;
