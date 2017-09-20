@@ -8,6 +8,7 @@ import {
 }
 from '@blueprintjs/core';
 import { Table } from '@blueprintjs/table';
+import FloatingHelp from 'components/FloatingHelp';
 
 export default class Trigonometry extends React.Component<
 {},
@@ -24,7 +25,6 @@ export default class Trigonometry extends React.Component<
     super(props, context);
     this.state = {
       angle: 0,
-      /* pi: '0.00',*/
       dragToChange: false,
       dragToChangeTooltip: false,
     };
@@ -66,6 +66,11 @@ export default class Trigonometry extends React.Component<
     return (
       <div onMouseDown={event => event.preventDefault()}>
         <Controls>
+          <Notice className="pt-callout">
+            This circle unit uses coordinates with top-left origin, which is very common
+            in many computer graphics system.<br/>
+            The quadrants' order goes counter-clockwise and start from bottom right.
+          </Notice>
           <Switch
             checked={!this.state.dragToChange}
             onChange={this.onSwitchDragToChange}
@@ -103,11 +108,16 @@ export default class Trigonometry extends React.Component<
 
 }
 
+const Notice = styled.div`
+margin-bottom: 1.5em;
+`
+
 const FixedTd = styled.td`
   width: 90px;
 `;
 
 const Controls = styled.div`
+max-width: 30%;
 position: absolute;
 top: 1.5em;
 left: 1.5em;
