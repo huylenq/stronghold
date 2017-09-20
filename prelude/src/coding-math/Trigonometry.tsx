@@ -13,7 +13,6 @@ export default class Trigonometry extends React.Component<
 {},
 {
   angle: number,
-  /* pi: string,*/
   dragToChange: boolean,
   dragToChangeTooltip: boolean,
 }
@@ -41,7 +40,6 @@ export default class Trigonometry extends React.Component<
 
   onAngleChange = (radian: number): void => {
     this.setState({angle: radian});
-    /* this.setState({pi: (radian / Math.PI).toFixed(2)});*/
   }
 
   onSwitchDragToChange = () => {
@@ -95,7 +93,7 @@ export default class Trigonometry extends React.Component<
           <tbody>
           <tr>
             <FixedTd>{(this.state.angle / Math.PI).toFixed(2)} π</FixedTd>
-            <FixedTd>{(this.state.angle * 180).toFixed(2)}°</FixedTd>
+            <FixedTd>{(this.state.angle / Math.PI * 180).toFixed(2)}°</FixedTd>
           </tr>
           </tbody>
         </SimpleTable>
