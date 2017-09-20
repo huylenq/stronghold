@@ -31,6 +31,14 @@ export default class Trigonometry extends React.Component<
     };
   }
 
+  componentDidMount() {
+    document.title = 'Trigonometry';
+  }
+
+  componentWillUnmount() {
+    document.title = "Huy Labs";
+  }
+
   onAngleChange = (radian: number): void => {
     this.setState({angle: radian});
     /* this.setState({pi: (radian / Math.PI).toFixed(2)});*/

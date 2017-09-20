@@ -13,7 +13,8 @@ export default class App extends React.Component {
     return (
       <Switch>
         <Route exact path="/" component={Welcome} />
-        <Route path="/trigonometry"
+        <Route
+          path="/trigonometry"
                render={() => <Trigonometry />}
         />
         <Route path="/emitter"
