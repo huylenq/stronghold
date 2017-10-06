@@ -77,7 +77,7 @@ export default class Pocket extends React.Component<IPocketProps, IPocketState> 
   }
 
   render() {
-    const numRows = this.state.step === Step.Fetched ? this.state.visibleData.length : 60;
+    const numRows = this.state.step === Step.Fetched ? this.state.visibleData.length : 40;
     const loadingOptions = this.state.step === Step.Fetched
                          ? []
                          : [TableLoadingOption.CELLS, TableLoadingOption.ROW_HEADERS];
