@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 
+import 'url-search-params-polyfill';
+
 import 'normalize.css';
 import '@blueprintjs/core/dist/blueprint.css';
 import '@blueprintjs/table/dist/table.css';

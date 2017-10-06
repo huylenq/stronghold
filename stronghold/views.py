@@ -4,7 +4,8 @@ from urllib.parse import urlencode
 
 
 POCKET_CONSUMER_KEY = '71182-21ca899c29444251d8a1fc2d'
-REDIRECT_URI = 'http://huylenq.com'
+# REDIRECT_URI = 'http://huylenq.com'
+HOST_PREFIX = 'http://192.168.0.101'
 
 
 def pocket_authorize(request):
@@ -12,14 +13,14 @@ def pocket_authorize(request):
         'https://getpocket.com/v3/oauth/request',
         {
             'consumer_key': POCKET_CONSUMER_KEY,
-            'redirect_uri': REDIRECT_URI,
+            'redirect_uri': HOST_PREFIX,
         },
         headers={'X-Accept': 'application/json'})
     request_token = request_token_resp.json()['code']
 
     params = urlencode({
         'request_token': request_token,
-        'redirect_uri': f'http://localhost/pocket?request_token={request_token}'
+        'redirect_uri': f'{HOST_PREFIX}/pocket?request_token={request_token}'
     })
     authorize_url = 'https://getpocket.com/auth/authorize?' + params
     return HttpResponseRedirect(authorize_url)

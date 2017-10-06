@@ -168,7 +168,7 @@ export default class Pocket extends React.Component<IPocketProps, IPocketState> 
   onDownloadButtonClick = () => {
     const content = json2csv({
       data: this.state.visibleData,
-      fields: ['given_title', 'given_url']
+      fields: ['given_title', 'exerpt', 'given_url']
     });
     const a = window.document.createElement('a');
     a.href = window.URL.createObjectURL(new Blob([content], {type: 'text/csv'}));
