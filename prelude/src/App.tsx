@@ -6,6 +6,7 @@ import Emitter from 'coding-math/Emitter';
 import Odontology from 'odontology/Odontology';
 import Welcome from 'Welcome';
 import Springs from 'coding-math/Springs';
+import Pocket from 'pocket/Pocket';
 
 export default class App extends React.Component {
 
@@ -15,23 +16,29 @@ export default class App extends React.Component {
         <Route exact path="/" component={Welcome} />
         <Route
           path="/trigonometry"
-               render={() => <Trigonometry />}
+          render={() => <Trigonometry />}
         />
-        <Route path="/emitter"
-               component={Emitter}
+        <Route
+          path="/emitter"
+          component={Emitter}
         />
         <Route
           path="/odontology"
           render={() =>
             <Odontology
               controls
-              width={innerWidth} height={innerHeight}
+              width={innerWidth}
+              height={innerHeight}
             />
           }
         />
         <Route
           path="/springs"
           render={() => <Springs width={window.innerWidth} height={window.innerHeight} />}
+        />
+        <Route
+          path="/pocket"
+          component={Pocket}
         />
       </Switch>
     );

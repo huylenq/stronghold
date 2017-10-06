@@ -4,6 +4,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 import 'normalize.css';
 import '@blueprintjs/core/dist/blueprint.css';
+import '@blueprintjs/table/dist/table.css';
 import './base.css';
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';

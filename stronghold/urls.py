@@ -14,7 +14,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from stronghold import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^connect/pocket/authorize', views.pocket_authorize),
+    url(r'^connect/pocket/fetch', views.pocket_fetch),
 ]
