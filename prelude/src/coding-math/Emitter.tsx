@@ -26,9 +26,9 @@ export default class Emitter extends React.Component<{},
   helpText() {
     switch (this.state.canvasMouseDowned) {
       case 0:
-        return "Click anywhere to add a sun"
+        return 'Click anywhere to add a sun';
       case 1:
-        return "Click on it again to remove"
+        return 'Click on it again to remove';
       default:
         return null;
     }

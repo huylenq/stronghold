@@ -35,7 +35,7 @@ export default class Trigonometry extends React.Component<
   }
 
   componentWillUnmount() {
-    document.title = "Huy Labs";
+    document.title = 'Huy Labs';
   }
 
   onAngleChange = (radian: number): void => {
@@ -110,7 +110,7 @@ export default class Trigonometry extends React.Component<
 
 const Notice = styled.div`
 margin-bottom: 1.5em;
-`
+`;
 
 const FixedTd = styled.td`
   width: 90px;

@@ -2,7 +2,6 @@ import * as React from 'react';
 import Particle from './Particle';
 import CanvasComponent, { dat, ICanvasComponentProps } from './CanvasComponent';
 import { Colors } from '@blueprintjs/core';
-import FloatingHelp from 'components/FloatingHelp';
 
 export interface IEmitterCanvasProps extends ICanvasComponentProps {
   onMouseDown?: () => void;
@@ -76,7 +75,7 @@ export default class EmitterCanvas extends CanvasComponent<IEmitterCanvasProps> 
     this.addMass(pos);
   }
 
-  addMass({x, y}) {
+  addMass({x, y}: IPosition) {
     const newMass = Particle.create({
       x, y,
       mass: this._sunMass,
