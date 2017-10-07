@@ -4,8 +4,9 @@ from urllib.parse import urlencode
 
 
 POCKET_CONSUMER_KEY = '71182-21ca899c29444251d8a1fc2d'
-HOST_PREFIX = 'http://huylenq.com'
+# REDIRECT_URI = 'http://huylenq.com'
 # HOST_PREFIX = 'http://192.168.0.101'
+HOST_PREFIX = 'http://localhost'
 
 
 def pocket_authorize(request):
@@ -36,8 +37,10 @@ def pocket_fetch(request):
         headers={'X-Accept': 'application/json'})
     print(access_token_resp)
     access_token = access_token_resp.json()['access_token']
-
-    resp = requests.get('https://getpocket.com/v3/get', {'consumer_key': POCKET_CONSUMER_KEY, 'access_token': access_token})
-    articles = resp.json()['list']
-
-    return JsonResponse(articles)
+    unreads = requests.get('https://getpocket.com/v3/get', {'consumer_key': POCKET_CONSUMER_KEY, 'access_token': access_token, 'state': 'unread'}).json()['list']
+    unread_items = [v for _, v in unreads.items()]
+    for item in unread_items: item['type'] = 'unread'
+    archives = requests.get('https://getpocket.com/v3/get', {'consumer_key': POCKET_CONSUMER_KEY, 'access_token': access_token, 'state': 'archive'}).json()['list']
+    archive_items = [v for _, v in archives.items()]
+    for item in archive_items: item['type'] = 'archive'
+    return JsonResponse({'data': unread_items + archive_items})
