@@ -37,10 +37,10 @@ def pocket_fetch(request):
         headers={'X-Accept': 'application/json'})
     print(access_token_resp)
     access_token = access_token_resp.json()['access_token']
-    unreads = requests.get('https://getpocket.com/v3/get', {'consumer_key': POCKET_CONSUMER_KEY, 'access_token': access_token, 'state': 'unread'}).json()['list']
+    unreads = requests.get('https://getpocket.com/v3/get', {'consumer_key': POCKET_CONSUMER_KEY, 'access_token': access_token, 'state': 'unread', 'favorite': 1}).json()['list']
     unread_items = [v for _, v in unreads.items()]
     for item in unread_items: item['type'] = 'unread'
-    archives = requests.get('https://getpocket.com/v3/get', {'consumer_key': POCKET_CONSUMER_KEY, 'access_token': access_token, 'state': 'archive'}).json()['list']
+    archives = requests.get('https://getpocket.com/v3/get', {'consumer_key': POCKET_CONSUMER_KEY, 'access_token': access_token, 'state': 'archive', 'favorite': 1}).json()['list']
     archive_items = [v for _, v in archives.items()]
     for item in archive_items: item['type'] = 'archive'
     return JsonResponse({'data': unread_items + archive_items})
