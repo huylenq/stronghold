@@ -42,6 +42,7 @@ class Welcome extends React.Component<IWelcomeProps> {
         <Credit>
           <div className="pt-callout">
             <p><i>I make things</i></p>
+            {/* tslint:disable-next-line */}
             <a className="pt-icon-standard pt-icon-envelope" href="mailto:huy.lenq@gmail.com"> huy.lenq@gmail.com</a> | { }
             <a className="pt-icon-standard pt-icon-document" href="/cv">CV</a>
           </div>
@@ -73,13 +74,13 @@ class Welcome extends React.Component<IWelcomeProps> {
             <SLCard onClick={this.props.onOdontologyCardClick}>
               <h5><a>Odontology</a></h5>
               <p>Odontology planar explanation</p>
-              <Tag>WIP</Tag>
+              <WIPTag />
             </SLCard>
             <SLCard onClick={this.props.onPetalienCardClick}>
               <h5><a>Petalien</a></h5>
               <p>A prototype of a new platformer game</p>
-              <Tag>WIP</Tag>
-              <Tag>Game</Tag>
+              <WIPTag />
+              <GameTag />
             </SLCard>
           </Deck>
         </div>
@@ -120,6 +121,9 @@ width: 260px;
   margin: 2px;
 }
 `;
+
+const WIPTag = () => <Tag className="pt-minimal">WIP</Tag>;
+const GameTag = () => <Tag className="pt-minimal pt-intent-success">GAME</Tag>;
 
 export default connect(
   null,
