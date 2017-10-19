@@ -24,6 +24,7 @@ export interface IWelcomeOwnProps {
   onOdontologyCardClick: () => any;
   onSpringsCardClick: () => any;
   onPetalienCardClick: () => any;
+  onCVClick: () => any;
 }
 
 export interface IWelcomeStateProps {
@@ -40,9 +41,9 @@ class Welcome extends React.Component<IWelcomeProps> {
         <Cube width={100} height={100} z={4} autoRotate={isTouchDevice()} />
         <Credit>
           <div className="pt-callout">
-            <i>I make things</i>
-            {' - '}
-            <a className="pt-icon-standard pt-icon-envelope" href="mailto:huy.lenq@gmail.com"> huy.lenq@gmail.com</a>
+            <p><i>I make things</i></p>
+            <a className="pt-icon-standard pt-icon-envelope" href="mailto:huy.lenq@gmail.com"> huy.lenq@gmail.com</a> | { }
+            <a className="pt-icon-standard pt-icon-document" href="/cv">CV</a>
           </div>
         </Credit>
         <div>
@@ -128,4 +129,5 @@ export default connect(
     onOdontologyCardClick: () => push('/odontology'),
     onSpringsCardClick: () => push('/springs'),
     onPetalienCardClick: () => window.location.href = '/petalien',
+    onCVClick: () => window.location.href = '/cv',
   })(StyledWelcome);
