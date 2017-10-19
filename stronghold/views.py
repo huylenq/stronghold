@@ -38,9 +38,9 @@ def pocket_fetch(request):
     print(access_token_resp)
     access_token = access_token_resp.json()['access_token']
     unreads = requests.get('https://getpocket.com/v3/get', {'consumer_key': POCKET_CONSUMER_KEY, 'access_token': access_token, 'state': 'unread', 'favorite': 1}).json()['list']
-    unread_items = [v for _, v in unreads.items()]
+    unread_items = [v for _, v in unreads.items()] if len(unreads) > 0 else []
     for item in unread_items: item['type'] = 'unread'
     archives = requests.get('https://getpocket.com/v3/get', {'consumer_key': POCKET_CONSUMER_KEY, 'access_token': access_token, 'state': 'archive', 'favorite': 1}).json()['list']
-    archive_items = [v for _, v in archives.items()]
+    archive_items = [v for _, v in archives.items()] if len(archives) > 0 else []
     for item in archive_items: item['type'] = 'archive'
     return JsonResponse({'data': unread_items + archive_items})
