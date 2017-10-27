@@ -10,5 +10,8 @@
 
 * Todo
 - [ ] Add Jupyter notebook 
+- [ ] Serve the binaries somewhere else instead of lazily (evil self: but conveniently as hell) put on git.
+
+-----
 
 On a scale from Saigon to London, how bad is this readme. Cà Mau (you probably don't know where it is)
