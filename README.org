@@ -10,7 +10,7 @@
 
 * Todo
 - [ ] Add Jupyter notebook 
-- [ ] Serve the binaries somewhere else instead of lazily (evil self: but conveniently as hell) put on git.
+- [ ] Serve the binaries somewhere else instead of lazily (evil self: but conveniently as hell) put them on git.
 
 -----
 
