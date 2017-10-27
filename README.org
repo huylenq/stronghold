@@ -10,3 +10,5 @@
 
 * Todo
 - [ ] Add Jupyter notebook 
+
+On a scale from Saigon to London, how bad is this readme. Cà Mau (you probably don't know where it is)
