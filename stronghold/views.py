@@ -4,6 +4,9 @@ from urllib.parse import urlencode
 
 
 POCKET_CONSUMER_KEY = '71182-21ca899c29444251d8a1fc2d'
+
+# Externalize your configs, said momma
+# But I'm lazy, said me
 HOST_PREFIX = 'http://huylenq.com'
 # HOST_PREFIX = 'http://192.168.0.101'
 # HOST_PREFIX = 'http://localhost'
