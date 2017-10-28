@@ -1,9 +1,0 @@
-{
-"TOTAL_MEMORY": 268435456,
-"dataUrl": "petalian.data.unityweb",
-"asmCodeUrl": "petalian.asm.code.unityweb",
-"asmMemoryUrl": "petalian.asm.memory.unityweb",
-"asmFrameworkUrl": "petalian.asm.framework.unityweb",
-"splashScreenStyle": "Dark",
-"backgroundColor": "#231F20"
-}
