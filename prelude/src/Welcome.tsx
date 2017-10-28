@@ -43,8 +43,7 @@ class Welcome extends React.Component<IWelcomeProps> {
           <div className="pt-callout">
             <p><i>I make things</i></p>
             {/* tslint:disable-next-line */}
-            <a className="pt-icon-standard pt-icon-envelope" href="mailto:huy.lenq@gmail.com"> huy.lenq@gmail.com</a> | { }
-            <a className="pt-icon-standard pt-icon-document" href="/cv">CV</a>
+            <a className="pt-icon-standard pt-icon-envelope" href="mailto:huy.lenq@gmail.com"> huy.lenq@gmail.com</a>
           </div>
         </Credit>
         <div>
